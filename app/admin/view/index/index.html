@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>后台管理</title>
+    <link rel="stylesheet" type="text/css" href="/static/home/css/webbase.css" />
+    <link rel="stylesheet" type="text/css" href="/static/home/css/pages-login-manage.css" />
+    <link rel="stylesheet" type="text/css" href="/static/layui/css/layui.css" />
+</head>
+<style type="text/css">
+    h1{text-align: center;font-weight: bold;color: dimgrey}
+    .loginmanage{height: 600px;}
+</style>
+<body>
+<div class="loginmanage">
+    <div class="py-container">
+        <div class="loginform">
+            <div class="tab-content tab-wraped">
+                <div>
+                    <h1>登录</h1>
+                </div>
+                <div id="profile" class="tab-pane  active">
+                    <form class="sui-form" id="subform" action="" method="post">
+                        <div class="input-prepend"><span class="add-on loginname"></span>
+                            <input name="username" type="text" placeholder="用户名" class="span2 input-xfat">
+                        </div>
+                        <div class="input-prepend"><span class="add-on loginpwd"></span>
+                            <input name="password" type="password" placeholder="请输入密码" class="span2 input-xfat">
+                        </div>
+                        <div class="setting">
+
+                        </div>
+                        <div class="logined">
+                            <button id="sub" type="button"  class="sui-btn btn-block btn-xlarge btn-danger" >登&nbsp;&nbsp;录</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="/static/home/js/plugins/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="/static/home/js/plugins/sui/sui.min.js"></script>
+<script type="text/javascript" src="/static/home/js/plugins/jquery-placeholder/jquery.placeholder.min.js"></script>
+<script src="/static/home/js/pages/jquery.slideunlock.js"></script>
+<script src="/static/layui/layui.all.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $("#sub").click(function () {
+            // 获取文本框的值
+            var username = $("input[name='username']").val();
+            var password = $("input[name='password']").val();
+            $.ajax({
+                url:"/index.php/admin/index/login/",
+                method:"post",
+                data:{"username":username,"password":password},
+                datatype:"json",
+                success:function (data) {
+                    console.log(data);
+                    if(data.code != 200){
+                        layer.msg(data.msg,{icon: 2,time:1000});
+                    }else{
+                        if(layer.msg(data.msg,{icon: 1,time:2000})){
+                            //跳转
+                            location.href = "/index.php/admin/index/show/";
+                        }
+
+                    }
+                }
+            });
+
+        });
+    });
+</script>
+</html>
